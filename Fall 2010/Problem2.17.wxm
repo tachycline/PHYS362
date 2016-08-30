@@ -1,0 +1,208 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM, problem 2.17
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Useful theorems involving Hermite Polynomials
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Rodrigues formula
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+The Rodrigues formula says that
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+H[n](%xi) := (-1)^n*%e^(%xi^2)*diff(%e^(-%xi^2),%xi,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Use it to derive H[3] and H[4].
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(H[3](%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(H[4](%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Recursion relation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+The following recursion relation gives you H[n+1] in terms of the two preceeding Hermite polynomials:
+H[n+1](%xi) := 2*%xi*H[n](%xi) - 2*n*H[n-1](%xi).  Use it, together with your answer in (a), to obtain
+H[5] and H[6].
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+The trick here is to not overwrite your old definition; we'll call recursion H RH instead of H.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+RH[3](%xi) := H[3](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+RH[4](%xi) := H[4](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Also, we'll rewrite for RH[n] rather than RH[n+1].
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+RH[n](%xi) := 2*%xi*RH[n-1](%xi) - 2*(n-1)*RH[n-2](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H5:fullratsimp(RH[5](%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H6:fullratsimp(RH[6](%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Do these match the functions from the other method?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+is(H5 = fullratsimp(H[5](%xi)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+is(H6 = fullratsimp(H[6](%xi)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Here we've used the "is" operator to check whether or not an equation is true.  In this
+case, it works out.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Differentiation formulas
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+If you differentiate an nth order polynomial, you get a polynomial of order n-1.
+For the Hermite polynomials, in fact, 
+diff(H[n](%xi),%xi) = 2*n*H[n-1](%xi).
+Check this, by differentiating H[5] and H[6].
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(H6,%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+2*6*H5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+or another way
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+is(2*6*H5 = diff(H6,%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Note that this returns false because the forms are not the same. When we simplify the LHS, however,
+we get true:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+is(fullratsimp(2*6*H5) = diff(H6,%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+is(diff(H5,%xi) = fullratsimp(2*5*H[4](%xi)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Generating function
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+H[n](%xi) is the nth z-derivative, at z=0, of the generating function %e^(-z^2+2*z*%xi); or, to put
+it another way, it is the coefficient of z^n/n! in the Taylor series expansion for this function.
+Use this to rederive H[0], H[1], and H[2]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Again, to not stomp on our previous definitions, we'll call the definitions from the generating function
+something else... GH[n](%xi).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+genfunc : %e^(-z^2+2*z*%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GH[n](%xi) := diff(genfunc,z,n),z=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GH[0](%xi),z=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GH[1](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%,z=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GH[2](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%,z=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+These match the values given in the book (table 2.1, page 56).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Note here that we had to do some tricks to get Maxima to set z=0 at the right time.  There may be a better way
+to do this, but I haven't figured it out yet.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Hermite polynomials
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsect start ]
+Book references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsect start ]
+Referenced in problems
+   [wxMaxima: subsect end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

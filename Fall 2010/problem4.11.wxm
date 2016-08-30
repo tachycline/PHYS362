@@ -1,0 +1,61 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 4.11
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Problem description
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+State the problem here, with definitions as necessary.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Solution goes here, with enough text to explain
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Index terms go here
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Reference the portfolio problems you use (or could use) in this solution
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Sections, equations, or pages in the book you found useful in doing this problem
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+You can backfill references to other problems here.
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

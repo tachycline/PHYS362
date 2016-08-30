@@ -1,0 +1,36 @@
+\documentclass[addpoints]{exam}
+\usepackage{charter}
+
+\begin{document}
+\header{Physics 362}{Final Exam}{10 December 2010}
+\coverchead{\Large Physics 362 Final Exam}
+\cellwidth{4em}
+\gradetablestretch{3.0}
+\headrule
+
+\begin{coverpages}
+\vskip0.1cm\hrule\vskip0.5cm
+\makebox[\textwidth]{Name:\enspace\hfill}
+\vskip 1cm
+You may use your homework portfolio as a reference with this exam.
+\vskip 2cm
+\begin{center}
+\gradetable
+\end{center}
+\end{coverpages}
+
+\begin{questions}
+  \question {\bf A One dimensional potential} Consider the potential
+  \begin{equation} V = \left\{\begin{array}{r}\infty \qquad x\le 0\\
+        -\alpha/x \qquad x>0 \end{array}\right. .\end{equation}
+  \begin{parts}
+    \part Do you expect to find bound states for this potential?  What about scattering states?  Explain your answer\vspace{\fill}
+    \part How does this potential differ from the Coulomb potential (the potential found in the hydrogen atom)?\vspace{\fill}
+    \part What do you expect this difference will do to the eigenfunctions?  The energies?\vspace{\fill}
+  \end{parts}
+  \newpage\question {\bf A two state system}
+  \newpage\question {\bf 3D SHO, cartesian coordinates}
+  \newpage\question {\bf 3D SHO, spherical coordinates}
+\end{questions}
+
+\end{document}

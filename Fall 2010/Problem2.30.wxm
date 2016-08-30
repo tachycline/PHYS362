@@ -1,0 +1,166 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 2.30
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Finite Square Well
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem Statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Normalize %psi in equation 2.151 to determine the constants D and F.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Equation 2.151 gives %psi divided into three regions:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi1(x) := F*%e^(-%kappa*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+for x > a;
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi2(x) := D*cos(l*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+for 0 < x < a; and psi(x) = psi(-x) for x < 0:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi3(x) := %psi2(-x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi4(x) := %psi1(-x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now we want to stitch these together.  Maxima doesn't have a good built in piecewise function
+capability, but there is an addon package which does the job.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load(pw);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi(x) := pw([minf,%psi4(x),-a,%psi3(x),0,%psi2(x),a,%psi1(x),inf],x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Of course, we have the usual assumptions about constants.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(E>0, V0>0, m>0, hbar>0, %kappa>0,F>0,D>0,a>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(%psi(x)*psi(x),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Hmmm. that was unexpected.  It turns out integrating piecewise functions requires that we use a special command.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+pwdefint(%psi(x)*%psi(x),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+That looks even worse.  What went wrong?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(fullratsimp(%));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%rho(x):=%psi(x)*%psi(x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(%rho,x,0,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+outer:integrate(F^2*%e^(-2*%kappa*x),x,a,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+inner:integrate(D^2*cos(l*x)^2,x,0,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+normeq : 1 = 2*(outer+inner);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(normeq);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([normeq],[D,F]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Solution goes here, with enough text to explain
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(l);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Index terms go here
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Reference the portfolio problems you use (or could use) in this solution
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Sections, equations, or pages in the book you found useful in doing this problem
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+You can backfill references to other problems here.
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

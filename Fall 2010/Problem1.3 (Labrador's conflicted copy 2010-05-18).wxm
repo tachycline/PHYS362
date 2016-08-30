@@ -1,0 +1,203 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Problem 1.3 (Griffiths QM)
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Consider the Gaussian distribution:
+
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+rho(x) := A*%e^(-%lambda*(x-a)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+where lambda, A, and a are positive real constants.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(a > 0)$
+assume(%lambda >0)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+facts();
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+(the facts() line is purely optional, but it's nice to see if you have any extra information floating around)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Use equation 1.16 to determine A
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Equation 1.16 is
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+eq116: 1 = integrate(rho(x),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(eq116,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+For convenience, let's redefine rho with the calculated value of A:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+rho(x):=sqrt(%lambda)/sqrt(%pi)*%e^(-lambda*(x-a)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find <x>, <x^2> and sigma
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+By equation 1.17,
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expx : integrate(rho(x)*x,x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+and by 1.18, (with expxsq = <x^2>)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expxsq : integrate(rho(x)*x^2,x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Ugly.  Let's simplify.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Standard deviation is then
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sigma:sqrt(expxsq - expx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Sketch the graph of rho(x)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+If we just try to plot, we'll get an error:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rho(x),[x,-10,10]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The reason for this is that lambda and a are not specified, so the function rho doesn't have a numerical value.
+We can fix this by setting values for lambda and a:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rho(x),[x,-10,10]),lambda=1,a=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+but while this gives us the general shape, we don't know what lambda and a do to the distribution.  We can find that
+out by varying each:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rho(x),[x,-10,10]),lambda=1,a=[-5,0,5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rho(x),[x,-10,10],[y,0,0.8]),lambda=[1,0.5,0.25],a=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from which we see that a gives the center of the distribution (actually, -a is the center point of the distribution, but
+we're often sloppy in the way that we say things) and lambda specifies the height and width.  Recall that we've normalized
+this distribution already; when we integrate from -inf to inf, we need to get 1.  Thus, widening the distribution drops
+the maximum value, and narrowing it makes it taller.
+
+We can show both of these effects on a single plot:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rho(x),[x,-10,10]),lambda=[1,0.5,0.25],a=[-5,0,5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Note that if you want more interactive plots, you can use the command plot2d(...) rather than wxplot2d(...).  This command
+has the same syntax, but produces a pop-out plot window in which you can rotate, pan, zoom, and measure things. Example:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d(rho(x),[x,-10,10]),lambda=[1,0.5,0.25],a=[-5,0,5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms:
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Gaussian, Expectation value, Standard deviation, Normalization
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio references:
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Problem 1.1 gives the formula for sigma in terms of <x>^2 and <x^2>.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Book references:
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Equations 1.16, 1.17, 1.18
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Referenced in problems:
+   [wxMaxima: subsect end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

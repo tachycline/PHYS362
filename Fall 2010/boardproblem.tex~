@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{charter}
+
+
+\begin{document}
+\centerline{\Large How to work a problem at the board}
+\vskip0.1cm\hrule\vskip0.5cm
+
+Over the course of the semester, you will have several opportunities
+to lead a discussion of a particular homework problem at the board.
+Your performance will be graded according to the attached rubric, but
+some additional notes may help you as you prepare for these
+opportunities.
+
+\begin{itemize}
+\item {\bf Always start the problem with a reference.}  Tell us which
+  problem you're solving.  This may seem unnecessary; we're all in the
+  same class, after all, and ought to know what's going on.  It is
+  sometimes the case, however, that one or more of us will be
+  distracted enough before or at the beginning of class that this
+  small step will be appreciated.
+\item {\bf Always give a synopsis of the problem.}  This doesn't
+  mean you should always read the problem text as given, but
+  you do need to give us enough information to remind us what
+  we're looking at.
+\item {\bf Prepare.}
+\item {\bf Talk to the class, not the board (or the instructor).}
+\item {\bf Articulate the physics present in the problem.}
+\item {\bf Explain the math.}
+\item {\bf Ask for questions or other input.}
+\end{itemize}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

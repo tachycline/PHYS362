@@ -1,0 +1,420 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Maxima and quantum mechanics
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Initial considerations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Often in quantum problems, we're solving for the wave function, which is traditionally called psi.
+The difficulty we have when doing this in Maxima is that there is already a built in function by that
+name.  We have two options:  we can either redefine psi, (which will give us a warning), or we can
+call the wave function something else.  To see the built-in functions which may collide with our
+nomenclature, we use one of the documentation functions, ?:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+? psi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We can also use the ?? function to give inexact matches:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+?? psi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Since none of these are likely to be needed in our work, we can overload psi with impunity.  As an example, here is a
+definition of the (non-normalized) spatial wave functions for the infinite square well:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[n](x) := A*sin(n*%pi*x/a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Note (a) the warning, and (b) even though we use lower case in our definition, the display uses a capital psi.
+Maxima is case sensitive, however, so we can also declare Psi[n](x,t), the (time dependent) wave function:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Psi[n](x,t) := psi[n](x)*%e^(-%i*E[n]*t/hbar);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This time, there is no warning; we are not redefining either the built-in function or our new 
+definition of psi[n](x).  Rather than putting in the energy explicitly, I included it as another
+subscripted function.  I can therefore use a function before I've defined it (but if I try to
+evaluate it before defining it, It will just come back as E[n]).  Since I'm going to be using
+these wave functions in examples going forward, I want to define a function for the energies.  I
+can just use the known values (since I know what they are); but I could also put in a more complicated
+calculation which would compute them as needed.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E[n] := n^2*%pi^2*hbar^2/(2*m*a^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sometimes, the sign of one of our constants will change the value of the integral.  In this case, for
+example, we will end up taking the square root of a; if a is negative, we'll get an imaginary result.
+Since a is a physically measurable quantity (in fact, it is a length), we have some insight into what
+values are appropriate, and we conclude that it is positive.  Likewise, we expect the mass to be positive.
+We could put in a numerical value for hbar, but we'd really rather not use numbers if we can survive without
+them, so it's sufficient to declare that it is positive, as well. 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(a>0,m>0,hbar>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+To meet boundary conditions, we know that n must be an integer.  Note that the syntax for declaring something
+an integer is different from giving a fact with assume.  Here we're actually restricting n to a certain class of
+object, rather than just giving the integrator a rule of thumb to work with.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+declare(n,integer);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+If you can't remember what you have already declare()d and assume()d, you can find out by asking Maxima for the
+facts():
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+facts();
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: section start ]
+Common tasks
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: subsect start ]
+Normalization
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+The wave functions listed above are not normalized. Often it is the case that we can solve the Schrödinger equation
+for the general form of the solution, but then must normalize our solution to keep the overall probability equal to 1.
+We do this by integrating (an integral inner product) and setting the result equal to one.  Then we solve for the
+overall multiplicative factor and substitute it back in.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+innerprod(m,n) := integrate(conjugate(Psi[m](x,t))*Psi[n](x,t),x,0,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+More generally (using mnemonics from the dirac notation):
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+bracket(bra, ket, a, b) := fullratsimp(integrate(conjugate(bra)*ket,x,a,b));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now, strictly speaking, when we turn a ket into a bra, we should take the conjugate.  So the thing I've labeled
+"bra" above is really the ket form of the bra.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+normaleq : 1=innerprod(n,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(normaleq,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Using assume here doesn't automatically pick the positive solution:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(A>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(normaleq,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We can substitute back in:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Asol : solve(normaleq,A)[2];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Psi[n](x,t),Asol;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+It's important to note that we haven't redefined psi.  We ought to do that next.  (If you're wondering why I explicitly
+kill psi here, check out the section on memoization below).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+define(phi[n](x),psi[n](x)),Asol;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(psi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi[3](x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(psi[n](x),phi[n](x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[3](x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Psi[3](x,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+These look correct.  However, observe:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Psi[n](x,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This still has A, rather than the value.  To understand why this is incorrect, see the section on 'memoizing' below.  
+To fix it, we kill the function and redefine it.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(Psi);
+Psi[n](x,t) := psi[n](x)*%e^(-%i*E[n]*t/hbar);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Psi[n](x,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Expectation values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Expectation values are calculated in a way similar to the inner product.  That is, we treat the quantity
+whose expectation value is being evaluated as a weight function in the inner product.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectx1 : integrate(conjugate(Psi[1](x,t))*x*Psi[1](x,t),x,0,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We use the general bracket notation for the expectation values
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectx[n] := bracket(Psi[n](x,t),x*Psi[n](x,t),0,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectx[1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectp[n] := bracket(Psi[n](x,t), -hbar/%i*diff(Psi[n](x,t),x), 0, a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectp[1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectpsq[n] := bracket(Psi[n](x,t), -hbar^2*diff(Psi[n](x,t),x,2), 0, a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectpsq[1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Using the bracket notation in this way gives a tremendous amount of flexibility, but it does require
+that we think when putting together an inner product.  Some people would think of that as a bug, but I
+prefer to see it as a feature.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: section start ]
+Potential pitfalls
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+This section describes some of Maxima's features that may surprise (and confuse) the unwary.  I'm specifically
+talking about features rather than syntax, here, and all of it is Maxima, rather than physics.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Subscripts and "memoizing"
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: fold    start ] */
+
+/* [wxMaxima: comment start ]
+Maxima uses a technique called "memoization" (not to be confused with memorization) to speed up some of its calculations.
+Basically, when you execute a function with a subscript (a value in square braces), that value is stored so that it
+can be used later.  This is great in that it speeds things up tremendously.  It is a problem, however, if you find a
+bug in your function definition, and have to change it.  Maxima will remember the old (buggy) definitions of any values
+you have already generated, instead of calculating the new, correct values.  Here's an example:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a[n]:=n^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+which:[1,2,3,4];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a[which];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now, suppose we wanted a[n] to be n^4, instead:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a[n]:=n^4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+No error message or warning.  Is all well?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a[5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+gives the correct answer, but 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a[which];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+keeps the memoized (and therefore incorrect) version which was generated when a[n] was n^2.  To avoid this problem,
+always preceed a redefinition of a subscripted function with a kill command to get the old definition out of memory,
+like so:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+(kill(a),
+a[n]:= n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a[which];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now it's all good.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: fold    end   ] */
+
+/* [wxMaxima: subsect start ]
+Function definitions and delayed evaluation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+There's more than one way to define a function in Maxima.  I've used two of them above:  the := operator, and the define
+statement. The main difference is that := has delayed evaluation.  This means that the rhs of a := expression is not
+evaluated until we try to use the lhs.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+foo[n](x) := psi[n](x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+foo[1](x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+foo[n](z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(psi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+foo[4](y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now, in contrast, here we do something similar, but with define:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+define(psi[n](x),phi[n](x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[4](y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[n](z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Since the phi was evaluated when we did the definition, psi is not affected when we kill(phi).
+Now, the trick comes when we want to evaluate some things now, and some things later.  We can
+do this by using the ' and '' operators, which roughly stand for "evaluate later" and 
+"evaluate now", respectively.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sqrt
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

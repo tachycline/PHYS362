@@ -1,0 +1,245 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM problem 2.11
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Expectation values in a SHO
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Compute <x>, <x^2>, <p> and <p^2> for the states psi0 and psi1 by explicit integration. 
+(Use the notation xi : sqrt(m*omega/hbar)*x and alpha : (m*omega/(%pi*hbar))^(1/4)).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Check the uncertainty principle for these states.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Compute <T> and <V> without doing any new integration.  Is the sum what you would expect?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Definitions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We'll start with psi0, using the suggested notation.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(psi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[0](%xi) := alpha*%e^(-%xi^2/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Next, we want to write the x and p operators in the suggested notation.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+xop(f) := %xi/(sqrt(omega*m/hbar))*f;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pop(f) := sqrt(omega*m/hbar)*hbar/%i*diff(f,%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We'll let Maxima know we want both to be prefix operators, so we can just  write pop psi[0](xi), for example.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+(prefix("xop"),
+prefix("pop"))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We could write down psi[1] explicitly, but we can also do it with ladder operators.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+aplus(f) := 1/sqrt(2*hbar*omega*m)*(-%i*pop f + m*omega*xop f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+prefix("aplus");
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[n](%xi) := 1/sqrt(n)*aplus psi[n-1](%xi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+That's the general case.  Let's check that psi1 has the right form.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(psi[1](%xi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This matches the form given on p. 47 of the text (example 2.4) after substituting.  We're ready to calculate.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+First <x> and <x^2>.  We expect the first of these to be zero by parity.  We have to be careful when integrating;
+we've changed variables to %xi.  We need to account for the fact that d%xi and dx are not the same.  We'll put 
+the correction directly into the integrands. 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+correction : 1/(alpha^2*sqrt(%pi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectx : integrate(correction*psi[0](%xi) * xop psi[0](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+To get x^2 as an operator, we just apply xop twice.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectxsq : integrate(correction*psi[0](%xi) * xop xop psi[0](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Now <p> and <p^2>.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectp : integrate(correction*psi[0](%xi) * pop psi[0](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectpsq : integrate(correction*psi[0](%xi) * pop pop psi[0](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The uncertainties:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax : sqrt(expectxsq - expectx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap : sqrt(expectpsq - expectp^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap*sigmax;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The uncertainty principle is valid in this case (minimally).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+For psi1, we do the same thing.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectx : integrate(correction*psi[1](%xi) * xop psi[1](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectxsq : integrate(correction*psi[1](%xi) * xop xop psi[1](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectp : integrate(correction*psi[1](%xi) * pop psi[1](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectpsq : integrate(correction*psi[1](%xi) * pop pop psi[1](%xi),%xi,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax : sqrt(expectxsq - expectx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap : sqrt(expectpsq - expectp^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap*sigmax;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Or 3 times the previous value.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+For the expectation values of T and V, we already have <p^2> and <x^2>, so we just need to multiply by the right constants.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expectT : expectpsq/(2*m);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectV : expectxsq*m*omega^2/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expectT+expectV;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Exactly the energy we would expect.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+SHO, expectation values, uncertainty relation
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Problem 2.10 (for the form of psi0 and the ladder operator)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Example 2.4, p. 47
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Referenced in problems
+   [wxMaxima: subsect end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

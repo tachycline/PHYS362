@@ -1,0 +1,134 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM problem 2.15
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Probability of SHO outside classically allowed region
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+In the ground state of the harmonic oscillator, what is the probability (correct to three
+significant digits) of finding the particle outside the classically allowed region?
+(Hint: Classically, the energy of an oscillator is E=(1/2)ka^2 = (1/2)m omega^2 a^2,
+where a is the amplitude.  So the "classically allowed region" for an oscillator of energy
+E extends from -sqrt(2E/(m omega^2)) to +sqrt(2E/(m omega^2)).)  We'll be using
+Maxima rather than a table to do the calculation.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Definitions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We're integrating psi squared for the ground state of the SHO, so we need to define psi,
+which is given in equation 2.59 in the text (p.46):
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+psi[0](x) := (m*omega/(%pi*hbar))^(1/4)*%e^(-(m*omega*x^2/(2*hbar)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(m>0,omega>0,hbar>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We might as well define the starting and ending points of our integration, as well.
+First we need to specify the energy for the ground state.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E : omega*hbar/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Then we can calculate the turning point.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+turningpoint : sqrt(2*E/(m*omega^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Now we just need to integrate.  We could either take the sum of the integrals from -inf to -turningpoint 
+and +turningpoint to +inf, or we could just integrate between the turning points and subtract from 1.
+The latter seems simpler.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Pin : integrate((psi[0](x))^2,x,-turningpoint,turningpoint);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(erf(1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+1-float(erf(1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Okay, just to check, let's do it the other way, too (this costs us very little).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Poutminus : integrate((psi[0](x))^2,x,-inf,-turningpoint);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Poutplus : integrate((psi[0](x))^2,x,turningpoint,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Pout : Poutminus + Poutplus;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+They match.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+SHO, error function, turning points
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+2.11
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsect start ]
+Referenced in problems
+   [wxMaxima: subsect end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

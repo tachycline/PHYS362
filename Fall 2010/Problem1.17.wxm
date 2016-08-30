@@ -1,0 +1,190 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 1.17
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+A piecewise parabolic wave function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+A particle is represented by the wave function
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%psi(x):=A*(a^2-x^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+between -a and a, and is zero otherwise.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Determine A
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+While there is a way to deal with piecewise functions in Maxima, for now it's easier to just
+change the limits of integration from [x,-inf,inf] to [x,-a,a]; anything outside of that range
+is just going to be zero anyway. 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+normint : integrate(%psi(x)^2,x,-a,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(normint=1,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A:rhs(part(solve(normint=1,A),2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We took the positive branch. Both part() and rhs() are functions which allow us to take expressions apart and use
+the pieces.  In this case, we took the right hand side of the equation which we found in the second part of the results
+of solving normint=1 for A. This technique can be useful if you get an expression which is lengthy or complicated
+enough that you don't want to retype it.  Even copy and paste can sometimes be prone to error, so having Maxima do
+the shuffling around of terms can be useful.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+What is <x>?
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We have done this kind of calculation before, so I'm not commenting on it here.  See problem 1.5 for 
+slightly more information (though by this point, it should be getting close to second nature).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expx : integrate(%psi(x)*x*%psi(x),x,-a,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find <p>
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+expp : hbar/%i*integrate(%psi(x)*diff(%psi(x),x),x,-a,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+What is <x^2>?
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+expxsq : integrate(%psi(x)*x^2*%psi(x),x,-a,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find <p^2>
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+exppsq : -hbar^2*integrate(%psi(x)*diff(%psi(x),x,2),x,-a,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find sigma_x,sigma_p
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax : sqrt(expxsq-expx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap : sqrt(exppsq-expp^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We know that both hbar and a are positive, but to Maxima, they're just labels.  Let's make
+that more explicit.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(hbar>0,a>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This will get rid of the absolute value signs, but only if we reevaluate the assignments above.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax : sqrt(expxsq-expx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap : sqrt(exppsq-expp^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Uncertainty relation?
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+unc:sigmax*sigmap;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We want to know if this is bigger than hbar/2.  We can use the predicate function is() to find out.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+is(unc >= hbar/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We could also look at the numerical value:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+float(sqrt(5)/sqrt(14));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This is bigger than 0.5, so we're good.  In this case, it seems kind of silly to use is(), but there are situations
+where your tests might be more complicated, and then it comes in handy.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Uncertainty relation, Wave function, Normalization, Expectation Value
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+1.9
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

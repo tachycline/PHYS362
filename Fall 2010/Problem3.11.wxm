@@ -1,0 +1,132 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 3.11
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Momentum space wave function and its uses
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Find the momentum space wave function %Phi(p,t) for a particle in the ground state of the harmonic oscillator.
+What is the probability (to two significant digits) that a measurement of p on a particle in this state would yield a value
+outside the classical range?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We first need the position space wave function for the ground state of the harmonic oscillator, as given in equation 2.59:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+\Psi(x,t) := (m*omega/(%pi*hbar))^(1/4)*%e^(-(m*omega)/(2*hbar)*x^2)*%e^(%i*omega*t/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Next, we use the definition of the momentum space wave function (equation 3.54 in the text):
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+\Phi(p,t) := 1/sqrt(2*%pi*hbar) * integrate(%e^(%i*p*x/hbar)*\Psi(x,t),x,minf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Since we used deferred evaluation, we need to actually evaluate this to get the functional form of Phi.  We set up facts
+to make the integral smoother.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(m>0,omega>0, hbar>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+\Phi(p,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Probability of measured momentum lying outside the classical range
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+To get the probability outside the classical range, we integrate conjugate(\Phi)*\Phi from the turning point 
+to infinity.  Since everything is symmetric, we can integrate from the positive turning point, and then 
+multiply by two.  (This is an application of equation 3.56 in the text)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+prob(lb) := 2*integrate(abs(\Phi(p,t))^2,p,lb,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We're only left with figuring out what the classical turning point is in terms of momentum.  A particle in the ground
+state of the harmonic oscillator has hbar*omega/2 energy.  Classically, the kinetic energy can range between
+this value (at x=0) and 0 (at the classical turning point).  The classical "momentum turning point", therefore, is
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E0 : hbar*omega/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lowerbound : sqrt(2*m*E0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+prob(lowerbound);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+or 16 %. 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Error functions, normal distribution, momentum space wave function
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Problems 2.10, 2.11
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+equation 2.59, 3.54, 3.56
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

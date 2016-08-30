@@ -1,0 +1,193 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM problem 2.4
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Expectation values in an ISW
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Calculate <x>, <x^2>, <p>, <p^2>, sigmax, and sigmap for the nth state of the infinite square well.
+Check that the uncertainty principle is satisfied.  Which state comes closest to the uncertainty limit?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Definitions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We'll define some functions to help us calculate the things we need.  First, the nth time independent
+wave function.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ISWpsi[n](x) := sqrt(2/a)*sin(n*%pi*x/a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Expectation values are defined in terms of integrals.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ISWExpectx(nn):=integrate(ISWpsi[nn](x) * x * ISWpsi[nn](x),x,-a,a );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ISWExpectxsq(nn):=integrate(ISWpsi[nn](x) * x^2 * ISWpsi[nn](x),x,-a,a );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We can do derivatives, too, which are necessary for the expectation values of momentum.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ISWExpectp(nn):=-%i*hbar*integrate(ISWpsi[nn](x) * diff(ISWpsi[nn](x),x),x,-a,a );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ISWExpectpsq(nn):=-hbar^2*integrate(ISWpsi[nn](x) * diff(ISWpsi[nn](x),x,2),x,-a,a );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The standard deviations are calculated in the normal way.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax(nn):= sqrt(ISWExpectxsq(nn) - ISWExpectx(nn));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap(nn):=sqrt(ISWExpectpsq(nn) - ISWExpectp(nn));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This will make it easier to simplify things
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(hbar > 0,a>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+declare(n,integer);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax(n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap(n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax(n)*sigmap(n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Maxima doesn't automatically cancel radicals, but we can tell it to do so explicitly:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+functoplot:%,radcan;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This is sort of proportional to n (the -3 under the radical screws up the proportionality).  
+Plotted (rescaling with hbar=1):
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(functoplot,[n,1,10]),hbar=1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Using map to look at specific values of n
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We can also look at a bunch of specific values of n at the same time using the map function.  First, define
+a list of the modes we want to use:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+themodes:[1,2,3,4,5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The map function applies an operator to a list of values.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+map(ISWExpectx,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+map(ISWExpectxsq,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigxes:map(sigmax,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+map(ISWExpectp,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+map(ISWExpectpsq,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigps :map(sigmap,themodes);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigxes * sigps;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We can convert to floating point values if they're easier to understand.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+float(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+We see numerically that the lowest value is the n=1 mode (as expected).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Infinite square well, Uncertainty relation, mapping, memoization
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsect start ]
+Book references
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsect start ]
+Referenced in problems
+   [wxMaxima: subsect end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

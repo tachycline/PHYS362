@@ -1,0 +1,83 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dudt : v;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dvdt : -(E-t^2)*u;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+points:rk([dudt,dvdt,0],[u,v,E],[1,0,0.9],[t,0,3,0.01])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+uL : makelist([points[i][1],points[i][2]+points[i][4]],i,1,length(points))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eL : makelist([points[i][1],points[i][4]],i,1,length(points))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, uL],[discrete, eL]],[x,0,3],[style, [lines,2]],[legend, "%psi", "E"]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+shoot(energy) := block([turningpoint, uL, eL, points],
+    print (energy),
+    turningpoint : sqrt(energy),
+    points : rk([dudt,dvdt,0],[u,v,E],[1,0,energy],[t,0,5*turningpoint,0.01]),
+    uL : makelist([points[i][1],points[i][2]+points[i][4]],i,1,length(points)),
+    eL : makelist([points[i][1],points[i][4]],i,1,length(points)),
+    /* wxplot2d([[discrete, uL],[discrete, eL]],[x,0,3*turningpoint],[style, [lines,2]],[legend, "%psi", "E"]), */
+    points[length(points)][2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+shoot(0.9);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+shoot(0.91);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+shoot(1.00001);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Refactor this to do bracketing and then bisection.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+mynewton(func, var, guess1, guess2) := block([curval, curguess, prevval, prevguess, slope, newguess],
+curguess : guess1,
+prevguess : guess2,
+curval : func(curguess),
+prevval : func(prevguess),
+slope : (curval-prevval)/(curguess-prevguess),
+print (["slope",slope]),
+newguess : curguess + curval/slope,
+do ( prevguess : curguess, 
+    curguess : newguess,
+    prevval : curval,
+    curval : func(curguess),
+    slope : (curval - prevval)/(curguess-prevguess),
+    print (["in loop, slope:",slope]),
+    newguess : curguess + curval/slope,
+    if abs(newguess - curguess)< 1.0e-6 then return (newguess))) ;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+mynewton(shoot,E, 0.9, 1.1);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,26 @@
+\documentclass[addpoints]{exam}
+\usepackage{charter}
+
+\begin{document}
+\header{Physics 462}{Midterm I}{12 February 2009}
+\coverchead{\Large Physics 462 Midterm I}
+\cellwidth{4em}
+\gradetablestretch{3.0}
+\headrule
+
+\begin{coverpages}
+\vskip0.1cm\hrule\vskip0.5cm
+\makebox[\textwidth]{Name:\enspace\hfill}
+\vskip 1cm
+You may use your homework portfolio as a reference with this exam.
+\vskip 2cm
+\begin{center}
+\gradetable
+\end{center}
+\end{coverpages}
+
+\begin{questions}
+
+
+\end{questions}
+\end{document}

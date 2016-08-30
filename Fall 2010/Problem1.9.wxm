@@ -1,0 +1,165 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 1.9
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Connecting V and %Psi
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+A particle of mass m is in the state
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%Psi(x,t) := A*%e^(-a*((m*x^2/hbar)+%i*t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Where A and a are positive real constants
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(A>0,a>0,hbar>0,m>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+(I add m and hbar to the list because Maxima knows nothing about physics; masses and hbar are both positive quantities).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Find A
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We find A by normalizing:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+normal : solve(1 = integrate(conjugate(%Psi(x,t))*%Psi(x,t),x,-inf,inf),A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Take the positive branch.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+A:(2*a*m/(%pi*hbar))^(1/4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+What potential V would give rise to this wave function?
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Plug %Psi into the Schrodinger equation and solve.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+schrod: diff(%Psi(x,t),t) = %i*hbar/(2*m)*diff(%Psi(x,t),x,2)-%i/hbar*V*%Psi(x,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(schrod,V);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find <x>, <x^2>, <p>, <p^2>
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+<x>
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expx : integrate(conjugate(%Psi(x,t))*x*%Psi(x,t),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+<x^2>
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expxsq : integrate(conjugate(%Psi(x,t))*x^2*%Psi(x,t),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+<p>
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expp : integrate(conjugate(%Psi(x,t))*hbar/%i*diff(%Psi(x,t),x),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+<p^2>
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+exppsq : -integrate(conjugate(%Psi(x,t))*hbar^2*diff(%Psi(x,t),x,2),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find sigmax and sigmap.  Is the uncertainty relation satisfied?
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We use the pieces we have already calculated. Sigmax first:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax : sqrt(expxsq - expx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmap : sqrt(exppsq - expp^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sigmax*sigmap;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+This exactly satisfies the uncertainty relation.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Uncertainty relation, potential
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

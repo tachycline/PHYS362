@@ -1,0 +1,158 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 4.10
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Radial wave functions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Work out the radial wave functions R[3,0], R[3,1], and R[3,2] using the recursion formula (Equation 4.76)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Equation 4.76 gives us the coefficients:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c[n,l,j] := 2*(j+l-n)/(j*(j+2*l+1))*c[n,l,j-1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Relative to the book, I have made two changes:  I have shifted the index j by one, and I have made the dependence
+on n and l explicit.  The coefficients are coefficients of the polynomial:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v[n,l](%rho):=sum(%rho^j*c[n,l,j],j,0,n-l-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+where we will have to be careful to define c for j=0 to avoid dividing by zero. The radial wavefunction is defined as
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+R[n,l](r):= 1/r*%rho^(l+1)*%e^(-%rho)*v[n,l](%rho);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+where %rho is defined
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%rho:r/(a*n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Defining the c0 for R30:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c[3,0,0] : c0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R[3,0](r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+we see a problem; there are some n's in this expression which should have been evaluated as 3.  What happened?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+The difficulty is in the delayed evaluation.  When we defined R, maxima didn't know what rho was going to be, so it
+left it as a placeholder.  When we stuck the value r/an into rho, we didn't make the n dependence explicit (as we could
+have by, for example, defining %rho[n] instead of %rho).  We can get around the problem by defining rho first, and then
+using '' to do immediate evaluation.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(R,%rho);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%rho:r/(a*n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R[n,l](r):= 1/r*''%rho^(l+1)*%e^(-''%rho)*v[n,l](''%rho);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Note that now rho does not appear in the definition of R, but all of the n's are already in their proper places.
+Now, when we assign an n value, it will correctly propagate through the expression.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+R[3,0](r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+The other two functions are also easy to figure out:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c[3,1,0]:c0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R[3,1](r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c[3,2,0]: c0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R[3,2](r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Index terms go here
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Reference the portfolio problems you use (or could use) in this solution
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Sections, equations, or pages in the book you found useful in doing this problem
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+You can backfill references to other problems here.
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

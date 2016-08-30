@@ -1,0 +1,149 @@
+This is pdfTeX, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.8.24)  4 OCT 2010 11:50
+entering extended mode
+**\nonstopmode\input{midterm1.tex}
+(./midterm1.tex (/Users/cmckay/Library/texmf/tex/latex/misc/exam.cls
+Document Class: exam 2008/07/19 Version 2.3 by Philip Hirschhorn
+(/usr/local/gwTeX/texmf.texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/gwTeX/texmf.texlive/tex/latex/base/article.cls
+Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/local/gwTeX/texmf.texlive/tex/latex/base/size10.clo
+File: size10.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+\@extrawidth=\skip43
+\@rightmargin=\skip44
+\@extrahead=\skip45
+\@extrafoot=\skip46
+\run@exhd=\skip47
+\fp@exhd=\skip48
+\run@exft=\skip49
+\fp@exft=\skip50
+\covrun@exhd=\skip51
+\covfp@exhd=\skip52
+\covrun@exft=\skip53
+\covfp@exft=\skip54
+\c@latest@ques=\count87
+\c@ques@end=\count88
+\c@last@object=\count89
+\c@incmp@ques=\count90
+\c@next@ques=\count91
+\c@nextq@page=\count92
+\c@tmp@hlfcntr=\count93
+\c@ifpos@cntr=\count94
+\c@question=\count95
+\c@partno=\count96
+\c@subpart=\count97
+\c@subsubpart=\count98
+\c@choice=\count99
+\c@numpoints=\count100
+\c@numbonuspoints=\count101
+\c@pointsof@thisquestion=\count102
+\c@bonuspointsof@thisquestion=\count103
+\c@numquestions=\count104
+\c@numparts=\count105
+\c@numsubparts=\count106
+\c@numsubsubparts=\count107
+\c@Curr@Page=\count108
+\c@@pagepoints=\count109
+\c@@pagebonuspoints=\count110
+\c@pageof@pagepoints=\count111
+\c@pageof@pagebonuspoints=\count112
+\c@latest@points=\count113
+\c@latest@bonuspoints=\count114
+\pageinfo@commands=\toks14
+\temp@toks=\toks15
+\pagepoint@commands=\toks16
+\point@toks=\toks17
+\c@ques@object=\count115
+\marginpointssep=\skip55
+\rightpointsmargin=\skip56
+\choice@toks=\toks18
+\answerlinelength=\skip57
+\answerskip=\skip58
+\answerclearance=\skip59
+\linefillheight=\skip60
+\linefillthickness=\skip61
+\dottedlinefillheight=\skip62
+\c@@iterator=\count116
+\@cellwidth=\skip63
+\c@tbl@points=\count117
+\c@num@cols=\count118
+\saved@totalleftmargin=\dimen103
+\@sollistdepth=\count119
+\FrameRule=\dimen104
+\FrameSep=\dimen105
+)
+(/usr/local/gwTeX/texmf.texlive/tex/latex/psnfss/charter.sty
+Package: charter 2005/04/12 PSNFSS-v9.2a (P.Dyballa) 
+) (./midterm1.aux)
+\openout1 = `midterm1.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Try loading font information for OT1+bch on input line 4.
+
+(/usr/local/gwTeX/texmf.texlive/tex/latex/psnfss/ot1bch.fd
+File: ot1bch.fd 2004/10/18 font definitions for OT1/bch.
+)
+Overfull \hbox (15.0pt too wide) in paragraph at lines 13--14
+[][] 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 19.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 19.
+[1{/usr/local/gwTeX/texmf.local/fonts/map/pdftex/updmap/pdftex.map}
+
+] [1
+
+]
+[2] [3] [4]
+This exam contains 4 questions with 13 parts, 0 subparts, and 0 subsubparts.
+This exam has a total of 100 points.
+This exam has a total of 0 bonus points.
+(./midterm1.aux) ) 
+Here is how much of TeX's memory you used:
+ 1139 strings out of 94073
+ 14672 string characters out of 1163505
+ 2068492 words of memory out of 4519688
+ 4490 multiletter control sequences out of 10000+50000
+ 9033 words of font info for 20 fonts, out of 2000000 for 2000
+ 645 hyphenation exceptions out of 5000
+ 30i,9n,19p,165b,252s stack positions out of 5000i,500n,6000p,200000b,50000s
+{/usr/local/gwTeX/texmf.texlive/fonts/enc/dvips/base/8r.enc}<
+/usr/local/gwTeX/texmf.texlive/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/lo
+cal/gwTeX/texmf.texlive/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/gwT
+eX/texmf.texlive/fonts/type1/bluesky/cm/cmmi10.pfb></usr/local/gwTeX/texmf.texl
+ive/fonts/type1/bluesky/cm/cmr10.pfb></usr/local/gwTeX/texmf.texlive/fonts/type
+1/bluesky/cm/cmr7.pfb></usr/local/gwTeX/texmf.texlive/fonts/type1/bluesky/cm/cm
+sy10.pfb>
+Output written on midterm1.pdf (5 pages, 47617 bytes).
+PDF statistics:
+ 43 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

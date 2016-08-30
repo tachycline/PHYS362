@@ -1,0 +1,64 @@
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.11.15)  23 AUG 2010 12:36
+entering extended mode
+**\input computationalproblems.tex
+(./computationalproblems.tex (/sw/share/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2004/02/16 v1.4f Standard LaTeX document class
+(/sw/share/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2004/02/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/sw/share/texmf-dist/tex/latex/psnfss/charter.sty
+Package: charter 2004/09/15 PSNFSS-v9.2 (P.Dyballa) 
+)
+(/sw/share/texmf-dist/tex/latex/preprint/fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip43
+)
+(./computationalproblems.aux)
+\openout1 = `computationalproblems.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Try loading font information for OT1+bch on input line 4.
+ (/sw/share/texmf-dist/tex/latex/psnfss/ot1bch.fd
+File: ot1bch.fd 2004/10/18 font definitions for OT1/bch.
+) [1
+
+{/sw/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(./computationalproblems.aux) ) 
+Here is how much of TeX's memory you used:
+ 267 strings out of 94500
+ 3263 string characters out of 1176113
+ 51348 words of memory out of 1000000
+ 3506 multiletter control sequences out of 10000+50000
+ 7102 words of font info for 18 fonts, out of 500000 for 2000
+ 580 hyphenation exceptions out of 1000
+ 23i,4n,17p,156b,107s stack positions out of 1500i,500n,5000p,200000b,5000s
+PDF statistics:
+ 7 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 1 words of extra memory for PDF output out of 65536
+{/sw/share/texmf-dist/fonts/enc/dvips/psnfss/8r.
+enc}</sw/share/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb>
+Output written on computationalproblems.pdf (1 page, 22181 bytes).

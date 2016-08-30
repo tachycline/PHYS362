@@ -1,0 +1,247 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3a ] */
+
+/* [wxMaxima: title   start ]
+Griffiths QM Problem 1.5
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Dealing with a complex wavefunction
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Problem statement
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Consider the wave function
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%Psi(x,t) := A*%e^(-%lambda*abs(x))*%e^(-%i*%omega*t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+with A, %lambda, %omega positive real constants.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(A>0, %lambda>0, %omega>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Normalize %Psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+To take the complex conjugate, we use the conjugate() function:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+conjugate(%Psi(x,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+So now we set up the normalization equation and solve it.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+normeq : integrate(%Psi(x,t)*conjugate(%Psi(x,t)),x,-inf,inf) = 1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(normeq,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Take the positive branch.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+A: sqrt(%lambda);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find <x> and <x^2>
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+We use the definition of expectation value here.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+expx : integrate(conjugate(%Psi(x,t))*x*%Psi(x,t),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expxsq : integrate(conjugate(%Psi(x,t))*x^2*%Psi(x,t),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Find %sigma_x.
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Also, sketch |%Psi^2| as a function of x, mark <x>+%sigma, <x>-sigma to illustrate the "spread".
+
+What is the probability of finding the particle inside this range?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%sigma : sqrt(expxsq - expx^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Again for plotting, we need to put in at least one value for lambda.  First, let's see what 
+changing lambda does to the shape of the function:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+psisq(x) := conjugate(%Psi(x,t))*%Psi(x,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psisq(x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(psisq(x),[x,-5,5]),%lambda:1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(psisq(x),[x,-5,5]),%lambda:0.5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(psisq(x),[x,-5,5]),%lambda:2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+So increasing lambda makes it tighter, as we might expect. Since <x> = 0, we're really marking +- %sigmax on the graph
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+[psisq(x),
+[discrete, [[1/(%lambda*sqrt(2)),0],[1/(%lambda*sqrt(2)),1]]],
+[discrete,[[-1/(%lambda*sqrt(2)),0],[-1/(%lambda*sqrt(2)),1] ]]],[x,-5,5]),%lambda:1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+In that last plot function, I am plotting 3 functions: (a) psisq(x); (b) a line from [1/(%lambda*sqrt(2)),0] to 
+[1/(%lambda*sqrt(2)),1] (the discrete keyword tells me that I'm giving discrete points), and (c) the same thing on
+the negative side to show the other bound.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+%lambda :1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x1 : 1/(%lambda*sqrt(2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psisq(x1),%lambda:1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+[psisq(x),
+[discrete, [1/(%lambda*sqrt(2)),psisq(1/(%lambda*sqrt(2)))]],
+[discrete,[-1/(%lambda*sqrt(2)),psisq(-1/(%lambda*sqrt(2)))] ]],[x,-5,5],
+[style, [lines,3,1], [points, 3,4,1], [points, 3,3,2]]),%lambda:1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+If instead, you want to place dots on the plot, you can set it up like this:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+The probability of finding the particle outside this range is
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+probout : 2*integrate(psisq(x),x,-inf,-%sigma);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+If you want a numerical approximation, tell Maxima to give you a floating point number:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+float(probout);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+You can even ask for more precision:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+bfloat(probout),fpprec:50;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+An aside, (almost)totally unrelated to the problem
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+I used %lambda above as a parameter, but I could just as easily make it an input to my psisq function:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+psisq(x,%lambda):=%lambda*%e^(-2*%lambda*abs(x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Then I can do a 3d plot to see the effect %lambda has on the width:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot3d(psisq(x,%lambda),[x,-5,5],[%lambda,0.5,2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+You can see that as it gets sharper, the peak gets higher, as well.  For real fun, use the
+outboard plot; you should be able to grab the graph and turn it to look at it from other angles.
+(Note that if you're doing this on a Mac, you must have X11 (availabile in /Applications/Utilities) first).
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(psisq(x,%lambda),[x,-5,5],[%lambda,0.5,2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Index terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Normalization, expectation value
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Portfolio References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+1.3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Book References
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Used in problems
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
